@@ -1,0 +1,23 @@
+name: Release JustLook.exe
+
+on:
+  push:
+    tags:
+      - 'v*'   # 匹配所有以 v 开头的标签，例如 v1.0.0
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # 允许创建 Release 和上传资产
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create Release and upload asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: JustLook.exe   # 要上传的文件，支持通配符，多个文件用换行分隔
+          generate_release_notes: true   # 自动根据提交记录生成更新日志
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
