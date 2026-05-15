@@ -20,7 +20,7 @@ using Microsoft::WRL::ComPtr;
 std::vector<AnimationFrame> g_animationFrames;
 
 static const wchar_t* g_wicExtensions[] = {
-    L".png", L".jpg", L".jpeg", L".bmp", L".gif", L".tiff", L".webp", L".ico", L".wdp"
+    L".png", L".jpg", L".jpeg", L".bmp", L".gif", L".tiff", L".webp", L".ico", L".wdp", L".cur"
 };
 
 static const wchar_t* g_stbExtensions[] = {
@@ -244,23 +244,10 @@ static bool LoadImageWithStb(const wchar_t* filePath)
     std::vector<unsigned char> fileData = ReadFileToMemory(filePath);
     if (fileData.empty()) return false;
 
-    // Other formats via stb_image
     int width, height, channels;
     unsigned char* data = stbi_load_from_memory(fileData.data(), (int)fileData.size(), &width, &height, &channels, 0);
     if (!data)
     {
-        const char* reason = stbi_failure_reason();
-        char msg[512];
-        if (reason && reason[0] != '\0')
-        {
-            sprintf_s(msg, "STB加载失败: %s\n文件: %ls", reason, filePath);
-        }
-        else
-        {
-            sprintf_s(msg, "STB加载失败: 未知错误\n格式: %c%c\n大小: %zu\n文件: %ls",
-                (char)fileData[0], (char)fileData[1], fileData.size(), filePath);
-        }
-        MessageBoxA(g_hWndMain, msg, "错误", MB_OK);
         return false;
     }
 

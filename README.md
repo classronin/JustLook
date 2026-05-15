@@ -5,7 +5,7 @@
 
 支持格式：
 1. WIC 格式（Windows内置）
-.png/.jpg/.bmp/.gif/.tiff/.webp/.ico/.wdp
+.png/.jpg/.bmp/.gif/.tiff/.webp/.ico/.wdp/.cur
 2. stb_image 格式
 .tga/.psd/.hdr/.qoi
 3. SVG 格式（Direct2D渲染）
@@ -20,6 +20,7 @@
 - Tab键：透明，浅色和深色。
 - ← 键 → 键： 切换当前目录下图像文件的名称顺序,目录内循环。
 - ↑ 键 ↓ 键： 切换当前目录下图像文件的名称开头与末尾
+- 空格键：图像保持比例拉伸填满窗口
 - 鼠标滚轮缩放功能，鼠标右键重置缩放。
 - 程序会在同目录下创建 `config.ini` 文件，ini可以编辑CTRL+鼠标滚轮缩放倍数。
 ```

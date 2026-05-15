@@ -1,4 +1,4 @@
-﻿#include "dragdrop.h"
+#include "dragdrop.h"
 #include "globals.h"
 #include "image_render.h"
 #include <shellapi.h>
@@ -22,9 +22,5 @@ void HandleDragDrop(HWND hwnd, HDROP hDrop)
     {
         SetForegroundWindow(hwnd);
         SetFocus(hwnd);
-    }
-    else
-    {
-        MessageBoxW(hwnd, L"无法加载图像文件", L"错误", MB_OK | MB_ICONERROR);
     }
 }

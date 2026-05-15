@@ -235,11 +235,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         return 0;
 
     case WM_RBUTTONDOWN:
-        // 右键重置缩放：回到原始大小（1:1），并居中显示
         g_userScaled = false;
         g_scale = 1.0f;
         
-        // 重新计算偏移量以居中显示
         if (g_isSvg && g_svgDocument)
         {
             D2D1_SIZE_F svgSize = g_svgDocument->GetViewportSize();
@@ -379,7 +377,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
     if (argc > 1)
     {
         LoadImageAndScanDir(argv[1]);
-        FitImageToWindow(g_hWndMain);
     }
     LocalFree(argv);
 

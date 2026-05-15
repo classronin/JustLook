@@ -1,4 +1,4 @@
-﻿#include "image_list.h"
+#include "image_list.h"
 #include "image_loader.h"
 #include "globals.h"
 #include "image_render.h"
@@ -81,7 +81,33 @@ bool NavigatePrev()
         g_currentIndex = static_cast<int>(g_imageList.size()) - 1;
     if (!LoadImageFromFile(g_imageList[g_currentIndex].c_str()))
         return false;
-    FitImageToWindow(g_hWndMain);
+    g_userScaled = false;
+    
+    RECT rc;
+    GetClientRect(g_hWndMain, &rc);
+    float clientWidth = static_cast<float>(rc.right - rc.left);
+    float clientHeight = static_cast<float>(rc.bottom - rc.top);
+    
+    if (g_isSvg && g_svgDocument)
+    {
+        D2D1_SIZE_F svgSize = g_svgDocument->GetViewportSize();
+        float scaleX = clientWidth / svgSize.width;
+        float scaleY = clientHeight / svgSize.height;
+        g_scale = (scaleX < scaleY) ? scaleX : scaleY;
+        if (g_scale > 1.0f) g_scale = 1.0f;
+        g_offsetX = (clientWidth - svgSize.width * g_scale) * 0.5f;
+        g_offsetY = (clientHeight - svgSize.height * g_scale) * 0.5f;
+    }
+    else if (g_imageBitmap)
+    {
+        float scaleX = clientWidth / g_imageSize.width;
+        float scaleY = clientHeight / g_imageSize.height;
+        g_scale = (scaleX < scaleY) ? scaleX : scaleY;
+        if (g_scale > 1.0f) g_scale = 1.0f;
+        g_offsetX = (clientWidth - g_imageSize.width * g_scale) * 0.5f;
+        g_offsetY = (clientHeight - g_imageSize.height * g_scale) * 0.5f;
+    }
+    
     Repaint();
     UpdateWindowTitle();
     return true;
@@ -95,7 +121,33 @@ bool NavigateNext()
         g_currentIndex = 0;
     if (!LoadImageFromFile(g_imageList[g_currentIndex].c_str()))
         return false;
-    FitImageToWindow(g_hWndMain);
+    g_userScaled = false;
+    
+    RECT rc;
+    GetClientRect(g_hWndMain, &rc);
+    float clientWidth = static_cast<float>(rc.right - rc.left);
+    float clientHeight = static_cast<float>(rc.bottom - rc.top);
+    
+    if (g_isSvg && g_svgDocument)
+    {
+        D2D1_SIZE_F svgSize = g_svgDocument->GetViewportSize();
+        float scaleX = clientWidth / svgSize.width;
+        float scaleY = clientHeight / svgSize.height;
+        g_scale = (scaleX < scaleY) ? scaleX : scaleY;
+        if (g_scale > 1.0f) g_scale = 1.0f;
+        g_offsetX = (clientWidth - svgSize.width * g_scale) * 0.5f;
+        g_offsetY = (clientHeight - svgSize.height * g_scale) * 0.5f;
+    }
+    else if (g_imageBitmap)
+    {
+        float scaleX = clientWidth / g_imageSize.width;
+        float scaleY = clientHeight / g_imageSize.height;
+        g_scale = (scaleX < scaleY) ? scaleX : scaleY;
+        if (g_scale > 1.0f) g_scale = 1.0f;
+        g_offsetX = (clientWidth - g_imageSize.width * g_scale) * 0.5f;
+        g_offsetY = (clientHeight - g_imageSize.height * g_scale) * 0.5f;
+    }
+    
     Repaint();
     UpdateWindowTitle();
     return true;
@@ -106,7 +158,33 @@ bool NavigateFirst()
     if (g_imageList.empty()) return false;
     g_currentIndex = 0;
     if (!LoadImageFromFile(g_imageList[0].c_str())) return false;
-    FitImageToWindow(g_hWndMain);
+    g_userScaled = false;
+    
+    RECT rc;
+    GetClientRect(g_hWndMain, &rc);
+    float clientWidth = static_cast<float>(rc.right - rc.left);
+    float clientHeight = static_cast<float>(rc.bottom - rc.top);
+    
+    if (g_isSvg && g_svgDocument)
+    {
+        D2D1_SIZE_F svgSize = g_svgDocument->GetViewportSize();
+        float scaleX = clientWidth / svgSize.width;
+        float scaleY = clientHeight / svgSize.height;
+        g_scale = (scaleX < scaleY) ? scaleX : scaleY;
+        if (g_scale > 1.0f) g_scale = 1.0f;
+        g_offsetX = (clientWidth - svgSize.width * g_scale) * 0.5f;
+        g_offsetY = (clientHeight - svgSize.height * g_scale) * 0.5f;
+    }
+    else if (g_imageBitmap)
+    {
+        float scaleX = clientWidth / g_imageSize.width;
+        float scaleY = clientHeight / g_imageSize.height;
+        g_scale = (scaleX < scaleY) ? scaleX : scaleY;
+        if (g_scale > 1.0f) g_scale = 1.0f;
+        g_offsetX = (clientWidth - g_imageSize.width * g_scale) * 0.5f;
+        g_offsetY = (clientHeight - g_imageSize.height * g_scale) * 0.5f;
+    }
+    
     Repaint();
     UpdateWindowTitle();
     return true;
@@ -117,7 +195,33 @@ bool NavigateLast()
     if (g_imageList.empty()) return false;
     g_currentIndex = static_cast<int>(g_imageList.size()) - 1;
     if (!LoadImageFromFile(g_imageList.back().c_str())) return false;
-    FitImageToWindow(g_hWndMain);
+    g_userScaled = false;
+    
+    RECT rc;
+    GetClientRect(g_hWndMain, &rc);
+    float clientWidth = static_cast<float>(rc.right - rc.left);
+    float clientHeight = static_cast<float>(rc.bottom - rc.top);
+    
+    if (g_isSvg && g_svgDocument)
+    {
+        D2D1_SIZE_F svgSize = g_svgDocument->GetViewportSize();
+        float scaleX = clientWidth / svgSize.width;
+        float scaleY = clientHeight / svgSize.height;
+        g_scale = (scaleX < scaleY) ? scaleX : scaleY;
+        if (g_scale > 1.0f) g_scale = 1.0f;
+        g_offsetX = (clientWidth - svgSize.width * g_scale) * 0.5f;
+        g_offsetY = (clientHeight - svgSize.height * g_scale) * 0.5f;
+    }
+    else if (g_imageBitmap)
+    {
+        float scaleX = clientWidth / g_imageSize.width;
+        float scaleY = clientHeight / g_imageSize.height;
+        g_scale = (scaleX < scaleY) ? scaleX : scaleY;
+        if (g_scale > 1.0f) g_scale = 1.0f;
+        g_offsetX = (clientWidth - g_imageSize.width * g_scale) * 0.5f;
+        g_offsetY = (clientHeight - g_imageSize.height * g_scale) * 0.5f;
+    }
+    
     Repaint();
     UpdateWindowTitle();
     return true;
